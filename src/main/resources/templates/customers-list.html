@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html   lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Elite</title>
+</head>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <!-- Page Content-->
+    <section layout:fragment="body" class="py-5">
+        <div class="container px-5 my-5">
+            <div class="text-center mb-5">
+                <h1 class="fw-bolder">Elite near you</h1>
+                <p class="lead fw-normal text-muted mb-0">Customers found in your area</p>
+            </div>
+            <div class="row gx-5">
+                <div>
+                    <form th:action="@{customers/search}" class="form-inline my-2 my-lg-0 mb-3">
+                        <input  name="query" class="form-control mr-sm-2 mb-5" type="search"
+                                placeholder="Search customer by last name" aria-label="Search">
+                    </form>
+                </div>
+                <div th:each="customer :${customers}" class="col-lg-6 mb-2">
+                    <div class="position-relative mb-3">
+                        <output th:text="${customer.firstName}"
+                                class="h3 fw-bolder text-decoration-none link-dark stretched-link">Project name
+                        </output>
+                        <output th:text="${customer.lastName}"
+                                class="h3 fw-bolder text-decoration-none link-dark stretched-link">Project name
+                        </output>
+                    </div>
+                    <a class="btn btn-primary" th:href="@{/customers/{customerId}(customerId=${customer.id})}">View</a>
+                    <a class="btn btn-primary" th:href="@{/customers/{customerId}/edit(customerId=${customer.id})}">Edit</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>

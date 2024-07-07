@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Customer</title>
+</head>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <!-- Page Content-->
+    <section layout:fragment="body" class="py-5">
+        <div class="container">
+            <form role="form" class="row g-3" method="post" th:action="@{/customers/{customerId}/edit(customerId=${customer.id})}" th:object="${customer}">
+                <input type="hidden" th:field="*{id}">
+                <div class="col-6">
+                    <label for="inputFirstName" class="form-label">First Name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="inputFirstName"
+                           name="firstName"
+                           th:field="*{firstName}"
+                           placeholder="Ahmed">
+                    <p th:if="@{#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}"></p>
+                </div>
+                <div class="col-6">
+                    <label for="inputLastName" class="form-label">Last Name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="inputLastName"
+                           name="lastName"
+                           th:field="*{lastName}"
+                           placeholder="Abdelqodous">
+                    <p th:if="@{#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}"></p>
+                </div>
+                <div class="col-md-12">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email"
+                           class="form-control"
+                           id="email"
+                           name="email"
+                           th:field="*{email}"
+                           placeholder="ahmed.abdelqodous@gmail.com">
+                    <p th:if="@{#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></p>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>
