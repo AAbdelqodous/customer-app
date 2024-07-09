@@ -63,9 +63,11 @@ public class CustomerController {
 
     @PostMapping("/customers/{customerId}/edit")
     public String updateCustomer(@PathVariable("customerId") Long customerId,
-                                     @Valid @ModelAttribute("customer") CustomerDto customer,
-                                     BindingResult bindingResult){
+                                 @Valid @ModelAttribute("customer") CustomerDto customer,
+                                 BindingResult bindingResult,
+                                 Model model){
         if(bindingResult.hasErrors()){
+            model.addAttribute("customer", customer);
             return "customer-edit";
         }
         customer.setId(customerId);

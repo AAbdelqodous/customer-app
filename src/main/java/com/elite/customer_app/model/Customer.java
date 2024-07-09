@@ -7,7 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -35,13 +37,6 @@ public class Customer {
     @OneToMany( mappedBy = "customer",
                 fetch = FetchType.LAZY,
                 cascade = CascadeType.REMOVE)
-    private Set<Order> orders = new HashSet<>();
+    private List<Order> orders = new ArrayList<>();
 
-    public void addOrder(Order order){
-        if(orders == null){
-            orders = new HashSet<>();
-        }
-        orders.add(order);
-        order.setCustomer(this);
-    }
 }

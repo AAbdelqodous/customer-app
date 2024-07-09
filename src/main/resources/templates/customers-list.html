@@ -26,11 +26,9 @@
                 <div th:each="customer :${customers}" class="col-lg-6 mb-2">
                     <div class="position-relative mb-3">
                         <output th:text="${customer.firstName}"
-                                class="h3 fw-bolder text-decoration-none link-dark stretched-link">Project name
-                        </output>
+                                class="h3 fw-bolder text-decoration-none link-dark stretched-link"></output>
                         <output th:text="${customer.lastName}"
-                                class="h3 fw-bolder text-decoration-none link-dark stretched-link">Project name
-                        </output>
+                                class="h3 fw-bolder text-decoration-none link-dark stretched-link"></output>
                     </div>
                     <a class="btn btn-primary" th:href="@{/customers/{customerId}(customerId=${customer.id})}">View</a>
                     <a class="btn btn-primary" th:href="@{/customers/{customerId}/edit(customerId=${customer.id})}">Edit</a>
