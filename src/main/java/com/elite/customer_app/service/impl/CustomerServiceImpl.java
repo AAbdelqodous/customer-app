@@ -1,6 +1,7 @@
 package com.elite.customer_app.service.impl;
 
 import com.elite.customer_app.dto.CustomerDto;
+import com.elite.customer_app.mapper.CustomerMapper;
 import com.elite.customer_app.model.Customer;
 import com.elite.customer_app.repository.CustomerRepository;
 import com.elite.customer_app.service.CustomerService;
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.elite.customer_app.mapper.CustomerMapper.mapToCustomer;
+import static com.elite.customer_app.mapper.CustomerMapper.mapToCustomerDto;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -22,7 +26,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerDto> findAll() {
         List<Customer> customers = customerRepository.findAll();
-        return customers.stream().map(this::mapToCustomerDto).collect(Collectors.toList());
+        return customers.stream().map(CustomerMapper::mapToCustomerDto).collect(Collectors.toList());
 //        return customers.stream().map(customer -> mapToCustomerDto(customer)).collect(Collectors.toList());
     }
 
@@ -53,32 +57,6 @@ public class CustomerServiceImpl implements CustomerService {
     public List<CustomerDto> searchCustomer(String query) {
         List<Customer> customers = customerRepository.searchCustomer(query);
         return customers.stream().map(customer -> mapToCustomerDto(customer)).collect(Collectors.toList());
-    }
-
-    private Customer mapToCustomer(CustomerDto customerDto) {
-        Customer customer = Customer.builder()
-                .id(customerDto.getId())
-                .firstName(customerDto.getFirstName())
-                .lastName(customerDto.getLastName())
-                .email(customerDto.getEmail())
-                .build();
-        return customer;
-    }
-
-    private CustomerDto mapToCustomerDto(Customer customer){
-        return CustomerDto.builder()
-                .id(customer.getId())
-                .firstName(customer.getFirstName())
-                .lastName(customer.getLastName())
-                .email(customer.getEmail())
-                .build();
-        /* CustomerDto customerDto = CustomerDto.builder()
-                .id(customer.getId())
-                .firstName(customer.getFirstName())
-                .lastName(customer.getLastName())
-                .email(customer.getEmail())
-                .build();
-        return customerDto;*/
     }
 
 }

@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,4 +31,17 @@ public class Customer {
 
     @Column(name = "email")
     private String email;
+
+    @OneToMany( mappedBy = "customer",
+                fetch = FetchType.LAZY,
+                cascade = CascadeType.REMOVE)
+    private Set<Order> orders = new HashSet<>();
+
+    public void addOrder(Order order){
+        if(orders == null){
+            orders = new HashSet<>();
+        }
+        orders.add(order);
+        order.setCustomer(this);
+    }
 }

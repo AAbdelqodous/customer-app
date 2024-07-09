@@ -5,7 +5,7 @@
       layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
-    <title>New Customer</title>
+    <title>Customer Details</title>
 </head>
 <body class="d-flex flex-column">
     <!-- Page Content-->
@@ -27,13 +27,14 @@
                 <div class="col-lg-8">
                     <!-- Featured blog post-->
                     <div class="card mb-4">
-                        <a href="#!"><p class="card-img-top"  th:text="#{customer.lastName}"
+                        <a href="#!"><p class="card-img-top"  th:text="${customer.lastName}"
                                           alt="..."></p></a>
                         <div class="card-body">
                             <div class="small text-muted" th:text="${customer.email}"></div>
                             <h2 class="card-title">About the customer</h2>
                             <p class="card-text" th:text="${customer.firstName}"></p>
                             <a class="btn btn-primary" th:href="@{/customers/{customerId}/delete(customerId=${customer.id})}">Delete</a>
+                            <a class="btn btn-primary" th:href="@{/orders/{customerId}/new(customerId=${customer.id})}">Create Event</a>
                         </div>
                     </div>
                     <!-- Nested row for non-featured blog posts-->
