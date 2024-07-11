@@ -1,5 +1,6 @@
 package com.elite.customer_app.dto;
 
+import com.elite.customer_app.model.UserEntity;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
@@ -21,5 +22,8 @@ public class CustomerDto {
     @Email(message = "Email should satisfy a specific pattern")
     private String email;
 
+    private UserEntity createdBy;
+
     private List<OrderDto> orders;
+
 }

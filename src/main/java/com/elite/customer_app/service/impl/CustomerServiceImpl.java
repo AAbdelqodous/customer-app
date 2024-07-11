@@ -3,7 +3,10 @@ package com.elite.customer_app.service.impl;
 import com.elite.customer_app.dto.CustomerDto;
 import com.elite.customer_app.mapper.CustomerMapper;
 import com.elite.customer_app.model.Customer;
+import com.elite.customer_app.model.UserEntity;
 import com.elite.customer_app.repository.CustomerRepository;
+import com.elite.customer_app.repository.UserRepository;
+import com.elite.customer_app.security.SecurityUtil;
 import com.elite.customer_app.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +19,13 @@ import static com.elite.customer_app.mapper.CustomerMapper.mapToCustomerDto;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, UserRepository userRepository) {
         this.customerRepository = customerRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -32,7 +37,16 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer save(CustomerDto customerDto) {
+        /*String username = SecurityUtil.getSessionUser();
+        UserEntity user = userRepository.findByUsername(username);*/
+
+        String email = SecurityUtil.getSessionUser(); //it returns the email, I don't know why!
+        UserEntity user = userRepository.findByEmail(email);
+
+        System.out.println("-------------- save ---------------");
+        System.out.println("email: " + email);
         Customer customer = mapToCustomer(customerDto);
+        customer.setCreatedBy(user);
         return customerRepository.save(customer);
     }
 
@@ -44,7 +58,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void update(CustomerDto customerDto) {
+        String username = SecurityUtil.getSessionUser();
+        UserEntity user = userRepository.findByUsername(username);
+
         Customer customer = mapToCustomer(customerDto);
+        customer.setCreatedBy(user);
         customerRepository.save(customer);
     }
 

@@ -16,6 +16,7 @@ public class CustomerMapper {
                 .firstName(customerDto.getFirstName())
                 .lastName(customerDto.getLastName())
                 .email(customerDto.getEmail())
+                .createdBy( customerDto.getCreatedBy())
                 .build();
     }
 
@@ -28,6 +29,7 @@ public class CustomerMapper {
                 .firstName( customer.getFirstName())
                 .lastName( customer.getLastName())
                 .email( customer.getEmail())
+                .createdBy( customer.getCreatedBy())
                 .orders( customer.getOrders().stream().map(OrderMapper::mapToOrderDto).collect(Collectors.toList()))
                 .build();
     }

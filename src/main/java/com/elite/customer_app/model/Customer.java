@@ -34,6 +34,10 @@ public class Customer {
     @Column(name = "email")
     private String email;
 
+    @ManyToOne
+    @JoinColumn(name = "created_by", nullable = false)
+    private UserEntity createdBy;
+
     @OneToMany( mappedBy = "customer",
                 fetch = FetchType.LAZY,
                 cascade = CascadeType.REMOVE)
