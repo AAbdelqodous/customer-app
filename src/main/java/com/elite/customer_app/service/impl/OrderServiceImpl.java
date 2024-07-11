@@ -23,6 +23,12 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
 
+    @Autowired
+    public OrderServiceImpl(OrderRepository orderRepository, CustomerRepository customerRepository) {
+        this.orderRepository = orderRepository;
+        this.customerRepository = customerRepository;
+    }
+
     @Override
     public List<OrderDto> findAll() {
         List<Order> orders = orderRepository.findAll();
@@ -48,12 +54,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void deleteOrder(long orderId) {
         orderRepository.deleteById(orderId);
-    }
-
-    @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository, CustomerRepository customerRepository) {
-        this.orderRepository = orderRepository;
-        this.customerRepository = customerRepository;
     }
 
     @Override
