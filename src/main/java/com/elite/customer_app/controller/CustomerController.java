@@ -2,7 +2,10 @@ package com.elite.customer_app.controller;
 
 import com.elite.customer_app.dto.CustomerDto;
 import com.elite.customer_app.model.Customer;
+import com.elite.customer_app.model.UserEntity;
+import com.elite.customer_app.security.SecurityUtil;
 import com.elite.customer_app.service.CustomerService;
+import com.elite.customer_app.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,15 +17,24 @@ import java.util.List;
 
 @Controller
 public class CustomerController {
-    private CustomerService customerService;
+    private final CustomerService customerService;
+    private final UserService userService;
 
     @Autowired
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService, UserService userService) {
         this.customerService = customerService;
+        this.userService = userService;
     }
 
     @GetMapping("/customers")
     public String customerList(Model model){
+        UserEntity user = new UserEntity();
+        String username = SecurityUtil.getSessionUser();
+        if(username != null){
+            user = userService.findByUsername( username);
+        }
+        model.addAttribute("user", user);
+
         List<CustomerDto> customers = customerService.findAll();
         model.addAttribute("customers", customers);
         return "customers-list";
@@ -31,6 +43,13 @@ public class CustomerController {
     @GetMapping("/customers/{customerId}")
     public String customerDetails(@PathVariable("customerId") Long customerId,
                                   Model model){
+        UserEntity user = new UserEntity();
+        String username = SecurityUtil.getSessionUser();
+        if(username != null){
+            user = userService.findByUsername(username);
+        }
+        model.addAttribute("user", user);
+
         CustomerDto customerDto = customerService.findById(customerId);
         model.addAttribute("customer", customerDto);
         return "customer-details";

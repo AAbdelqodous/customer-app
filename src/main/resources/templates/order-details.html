@@ -33,7 +33,9 @@
             <div class="small text-muted" th:text="${order.amount}"></div>
             <h2 class="card-title">About the order</h2>
             <p class="card-text" th:text="${order.orderDate}"></p>
-            <a class="btn btn-primary" th:href="@{/orders/{orderId}/delete(orderId=${order.Id})}">Delete</a>
+            <div th:if="${user.id} == ${order.customer.createdBy.id}">
+              <a class="btn btn-primary" th:href="@{/orders/{orderId}/delete(orderId=${order.Id})}">Delete</a>
+            </div>
           </div>
         </div>
       </div>

@@ -4,7 +4,10 @@ import com.elite.customer_app.dto.CustomerDto;
 import com.elite.customer_app.dto.OrderDto;
 import com.elite.customer_app.model.Customer;
 import com.elite.customer_app.model.Order;
+import com.elite.customer_app.model.UserEntity;
+import com.elite.customer_app.security.SecurityUtil;
 import com.elite.customer_app.service.OrderService;
+import com.elite.customer_app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,15 +21,24 @@ import java.util.List;
 
 @Controller
 public class OrderController {
-    private OrderService orderService;
+    private final OrderService orderService;
+    private final UserService userService;
 
     @Autowired
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, UserService userService) {
         this.orderService = orderService;
+        this.userService = userService;
     }
 
     @GetMapping("/orders")
-    public String customerList(Model model){
+    public String orderList(Model model){
+        UserEntity user = new UserEntity();
+        String username = SecurityUtil.getSessionUser();
+        if(username != null){
+            user = userService.findByUsername(username);
+        }
+        model.addAttribute("user", user);
+
         List<OrderDto> orders = orderService.findAll();
         model.addAttribute("orders", orders);
         return "orders-list";
@@ -34,6 +46,13 @@ public class OrderController {
 
     @GetMapping("/orders/{orderId}")
     public String findOrder(@PathVariable("orderId") Long orderId, Model model){
+        UserEntity user = new UserEntity();
+        String username = SecurityUtil.getSessionUser();
+        if(username != null){
+            user = userService.findByUsername(username);
+        }
+        model.addAttribute("user", user);
+
         OrderDto order = orderService.findById(orderId);
         model.addAttribute("order", order);
         return "order-details";

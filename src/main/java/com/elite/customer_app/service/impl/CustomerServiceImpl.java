@@ -37,14 +37,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer save(CustomerDto customerDto) {
-        /*String username = SecurityUtil.getSessionUser();
-        UserEntity user = userRepository.findByUsername(username);*/
-
-        String email = SecurityUtil.getSessionUser(); //it returns the email, I don't know why!
-        UserEntity user = userRepository.findByEmail(email);
+        String username = SecurityUtil.getSessionUser();
+        UserEntity user = userRepository.findByUsername(username);
 
         System.out.println("-------------- save ---------------");
-        System.out.println("email: " + email);
+        System.out.println("username: " + username);
         Customer customer = mapToCustomer(customerDto);
         customer.setCreatedBy(user);
         return customerRepository.save(customer);

@@ -6,12 +6,11 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import java.sql.DriverManager;
-
 @SpringBootApplication
 @ComponentScan(basePackages = "com.elite.customer_app")
 @EntityScan(basePackages = "com.elite.customer_app.model")
 @EnableJpaRepositories(basePackages = "com.elite.customer_app.repository")
+//@EnableAspectJAutoProxy
 public class CustomerAppApplication {
 
 	public static void main(String[] args) {

@@ -33,10 +33,12 @@
                         <div class="small text-muted" th:text="${customer.email}"></div>
                         <h2 class="card-title">About the customer</h2>
                         <p class="card-text" th:text="${customer.firstName}"></p>
-                        <a class="btn btn-primary"
-                           th:href="@{/customers/{customerId}/delete(customerId=${customer.id})}">Delete</a>
-                        <a class="btn btn-primary" th:href="@{/orders/{customerId}/new(customerId=${customer.id})}">Create
-                            Event</a>
+                        <div th:if="${user.id} == ${customer.createdBy.id}">
+                            <a class="btn btn-primary"
+                               th:href="@{/customers/{customerId}/delete(customerId=${customer.id})}">Delete</a>
+                            <a class="btn btn-primary" th:href="@{/orders/{customerId}/new(customerId=${customer.id})}">Create
+                                Event</a>
+                        </div>
                     </div>
                 </div>
                 <!-- Nested row for non-featured blog posts-->
@@ -48,7 +50,8 @@
                             <div class="card-body">
                                 <h2 class="card-title h4" th:text="${order.orderDate}"></h2>
                                 <h3 class="card-title h4" th:text="${order.amount}"></h3>
-                                <a class="btn btn-primary" th:href="@{/orders/{orderId}(orderId=${order.id})}">Details</a>
+                                <a class="btn btn-primary"
+                                   th:href="@{/orders/{orderId}(orderId=${order.id})}">Details</a>
                             </div>
                         </div>
                     </div>
